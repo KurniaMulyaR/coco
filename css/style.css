@@ -231,8 +231,8 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
 }
 
 .balloon { position: absolute; z-index: 4; animation: balloonFloat 7s ease-in-out infinite; }
-.balloon-large { top: 12%; right: 7%;  width: 150px; }
-.balloon-small { top: 24%; right: 20%; width: 85px; animation-delay: -2.5s; }
+.balloon-large { top: 8%; left: 2%;  width: 150px; }
+.balloon-small { top: 24%; right:0; width: 85px; animation-delay: -2.5s; }
 @keyframes balloonFloat {
   0%,100% { transform: translateY(0) rotate(-3deg); }
   50% { transform: translateY(-22px) rotate(3deg); }
@@ -276,6 +276,7 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
 
 .weare-section {
   position: relative;
+  z-index: 3;
 }
  
 /* ── Torn top ── */
@@ -299,7 +300,7 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
 /* ── White body ── */
 .weare-body {
   padding: 60px 64px 80px;
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
 }
  
 .weare-grid {
@@ -402,6 +403,131 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
 @keyframes pulseBubble {
   0%,100% { transform: scale(1); }
   50% { transform: scale(1.06); }
+}
+
+/* ===== OUR BELIEF SYSTEM SECTION ===== */
+.belief-section {
+  min-height: 700px;
+}
+ 
+/* Sky background */
+.belief-bg {  
+  position: absolute;
+  margin-top: -6rem;
+  width: 100%;
+  z-index: 1;
+}
+ 
+/* Overlay to lighten sky slightly for readability */
+.belief-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,0.18);
+  z-index: 1;
+}
+ 
+@keyframes floatBubble {
+  0%   { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-30px) scale(1.05); }
+}
+ 
+/* Inner container */
+.belief-inner {
+  position: relative; z-index: 3;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 36px;
+}
+ 
+/* Title badge — yellow pill */
+.belief-title-wrap {
+  background: #e8b84b;
+  padding: 40px 150px;
+  border-radius: 6px;
+  margin-top: 17rem;
+  box-shadow: 0 4px 16px rgba(232,184,75,0.4);
+}
+.belief-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 2.5vw, 38px);
+  font-weight: 900;
+  color: var(--coco-teal);
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  -webkit-text-stroke: 3px white;   /* outline putih tebal */
+  paint-order: stroke fill;          /* supaya outline di luar fill */
+  text-shadow:
+    3px 3px 6px rgba(0,0,0,0.5),    /* shadow teks */
+    1px 1px 0 rgba(0,0,0,0.3);
+}
+ 
+/* Rows */
+.belief-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+.belief-row-3 { }
+.belief-row-2 { max-width: 680px; }
+ 
+/* Card */
+.belief-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 3px solid #e8b84b;
+  text-align: center;
+  border-radius: 16px;
+  padding: 28px 24px 32px;
+  flex: 1;
+  display: flex; flex-direction: column; gap: 12px;
+  box-shadow: 0 4px 24px rgba(26,74,92,0.08), 0 1px 4px rgba(0,0,0,0.06);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s;
+}
+.belief-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(26,74,92,0.15);
+}
+ 
+.belief-icon {
+  margin : auto;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.belief-icon2{
+  margin-bottom: 1rem;
+}
+ 
+.belief-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 900;
+  color: var(--coco-teal);
+  line-height: 1.3;
+}
+ 
+.belief-card-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: rgba(26,74,92,0.72);
+  line-height: 1.7;
+}
+ 
+/* Responsive */
+@media (max-width: 768px) {
+  .belief-row { flex-direction: column; align-items: center; }
+  .belief-row-2 { max-width: 100%; }
+  .belief-card { max-width: 400px; width: 100%; }
+  .belief-section { padding: 80px 24px 90px; }
+}
+.ourbelief-bg {
+  top: 0; left: 0;
+  margin-top: -12rem;
+  width: 100%;
 }
 /* ===== TICKER ===== */
 .ticker-wrap {
@@ -583,36 +709,61 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
 }
 
 /* ===== FOOTER ===== */
-.footer { background: #0c2535; padding: 90px 48px 40px; }
-.footer-top {
-  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
-  gap: 60px; margin-bottom: 64px;
-}
-.footer-logo { height: 38px; object-fit: contain; filter: brightness(5) grayscale(1); margin-bottom: 20px; display: block; }
-.footer-tagline {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13.5px; line-height: 1.75; color: rgba(255,255,255,0.4);
-}
-.footer-heading {
+.footer { background: #0c2535; border-top: 5px solid #e8c44a; text-align: center; padding: 90px 48px 40px; position: relative; z-index: 2; margin-top: 5rem }
+.footer-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 15px; font-weight: 700;
-  color: var(--coco-white); margin-bottom: 22px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #ffffff;
+  margin-bottom: auto;
+  
 }
-.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.footer-links a {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13.5px; color: rgba(255,255,255,0.4);
-  text-decoration: none; transition: color 0.2s;
+.footer-logo img {
+  width: 120px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  display: block;
+  margin: 0 auto 15px;
 }
-.footer-links a:hover { color: rgba(255,255,255,0.85); }
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 30px;
-  display: flex; justify-content: space-between; align-items: center;
+.footer-logo-line {
+  width: 60px;
+  height: 2px;
+  background: #e8c44a;
+  margin: 0 auto 28px;
+}
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+.footer-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8c44a;
+}
+.footer-privacy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 24px;
+}
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #e8c44a;
+  border-radius: 10px;
+  color: #1a3d4f;
+  font-size: 20px;
+  margin-bottom: 20px
 }
 .footer-copy {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12.5px; color: rgba(255,255,255,0.28);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
 }
 
 /* ===== SCROLL REVEAL ===== */
