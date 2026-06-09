@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COCO — Digital Agency | Serices</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coco: {
+              teal: '#1a4a5c',
+              sky:  '#87ceeb',
+              cream:'#f5f0eb',
+              dark: '#0c2535',
+            }
+          },
+          fontFamily: {
+            playfair: ['"Playfair Display"', 'Georgia', 'serif'],
+            dm:       ['"DM Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-white">
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <nav class="navbar">
+    <img src="assets/logo_coco.png" alt="COCO Digital Agency" class="nav-logo" />
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#client">Client</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION SERICES
+  ═══════════════════════════════════════ -->
+  <section class="hero-services">
+
+    <!-- Sky background -->
+    <img src="assets/background_top_services.png" alt="" class="hero-bg" />
+
+    <!-- Decorative: Flowers -->
+    <img src="assets/pohon_services.png" alt="" class="tree tree-sun"   />
+    <img src="assets/pohon_services.png"    alt="" class="tree tree-red"   />
+
+    <!-- Hero Content -->
+    <div class="hero-content-services">
+        <!-- Title badge -->
+        <div class="hero-tag-services">
+          <h2 class="hero-title-services">Our Belief System</h2>
+        </div>
+    </div>
+    
+  </section>
+<!-- ═══════════════════════════════════════
+       WE ARE COCO
+  ═══════════════════════════════════════ -->
+  
+      <!-- Torn paper top edge -->
+      <section id="about" class="weare-section">
+        <img src="assets/background_service_polos.png" alt="" class="weare-bg" /> 
+ 
+      <!-- White content area -->
+      <div class="weare-body">
+        <div class="weare-grid">
+  
+          <!-- Left: Text -->
+          <div class="weare-text reveal">
+            <h2 class="weare-title">We are COCO</h2>
+            <div class="weare-rule"></div>
+            <p class="weare-desc reveal reveal-delay-1">
+              The digital partner helping brands navigate the evolving landscape
+              of culture, media, and technology. Crafting campaigns and experiences
+              that spark connection, relevance, and measurable impact."
+            </p>
+          </div>
+  
+          <!-- Right: Logo -->
+          <div class="weare-logo-wrap reveal reveal-delay-2">
+            <img src="assets/logo_coco.png" alt="COCO Digital Agency" class="weare-logo" />
+          </div>
+  
+        </div>
+      </div>    
+      
+  
+    </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer id="contact" class="footer">
+     <div class="footer-logo">
+        <img src="assets/logo_coco.png" alt="COCO Digital Agency" />
+     </div>
+      <div class="footer-logo-line"></div>
+      <nav class="footer-nav">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+      </nav>
+      <p class="footer-privacy">Privacy Notice &amp; Terms of Services</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">
+          <i class="ti ti-brand-instagram"></i>
+        </a>
+      </div>
+      <p class="footer-copy">© 2026 Coco Agency</p>
+  </footer>
+
+  <!-- ── Scripts ── -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
