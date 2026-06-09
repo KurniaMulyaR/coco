@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COCO — Digital Agency | Our Client</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coco: {
+              teal: '#1a4a5c',
+              sky:  '#87ceeb',
+              cream:'#f5f0eb',
+              dark: '#0c2535',
+            }
+          },
+          fontFamily: {
+            playfair: ['"Playfair Display"', 'Georgia', 'serif'],
+            dm:       ['"DM Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-white">
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <nav class="navbar">
+    <img src="assets/logo_coco.png" alt="COCO Digital Agency" class="nav-logo" />
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#client" class="active">Client</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════ -->
+  <section class="hero-section-services" id="home">
+
+    <!-- Sky background -->
+    <img src="assets/ourclient/background_top.png" alt="" class="hero-bg-services" />
+
+    <!-- Decorative: Paper Planes -->
+    <!-- <img src="assets/pesawat_kanan.png" alt="" class="plane plane-right" />
+    <img src="assets/pesawat_kiri.png"  alt="" class="plane plane-left"  /> -->
+
+    <!-- Decorative: Balloons -->
+    <!-- <img src="assets/balon_besar.png" alt="" class="balloon balloon-large" />
+    <img src="assets/balon_kecil.png" alt="" class="balloon balloon-small" /> -->
+
+
+    <!-- Hero Content -->
+    <div class="hero-content-services reveal">
+      <h1 class="coco-text">
+        Our Client
+      </h1>
+    </div>
+    
+  </section>
+<!-- ═══════════════════════════════════════
+       Our Client Logos
+  ═══════════════════════════════════════ -->
+  
+      <!-- Torn paper top edge -->
+      <section id="about" class="card-client-section">
+        <!-- <img src="assets/ourclient/background_bottom.png" alt="" class="card-client-bg" />  -->
+        
+        <div class="clients-section">
+          <div class="clients-grid">
+            <img src="assets/logo_wardah.png" alt="Wardah">
+            <img src="assets/logo_makeover.png" alt="Make Over">
+            <img src="assets/logo_aqua.png" alt="Aqua">
+            <img src="assets/logo_kahf.png" alt="Kahf">
+            <img src="assets/logo_emina.png" alt="Emina">
+            <img src="assets/logo_yamaha.png" alt="Yamaha">
+            <img src="assets/logo_gatsby.png" alt="Gatsby">
+            <img src="assets/logo_omg.png" alt="OMG Oh My Glam">
+            <img src="assets/logo_sagivoto.png" alt="Sagivoto">
+            <img src="assets/logo_rituals.png" alt="Rituals">
+            <img src="assets/logo_loves.png" alt="Loves Semprong">
+            <img src="assets/logo_bravo.png" alt="Bravo">
+            <img src="assets/logo_rotio.png" alt="RotiO">
+          </div>
+        </div>
+
+        <div class="contact-section">
+          <h2 class="contact-title">Get in Touch</h2>
+          <div class="contact-divider"></div>
+
+          <div class="contact-form">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" placeholder="Enter your name here">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="Enter your email here">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" placeholder="Enter your phone here">
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea placeholder="Type your message"></textarea>
+            </div>
+            <button class="btn-send">Send Message</button>
+          </div>
+        </div>
+      </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer id="contact" class="footer">
+    <div class="footer-top">
+
+      <!-- Brand -->
+      <div>
+        <img src="assets/logo_coco.png" alt="COCO" class="footer-logo" />
+        <p class="footer-tagline">
+          Digital Agency berbasis di Jakarta yang membantu brand tumbuh, bercerita,
+          dan terhubung dengan audiens secara bermakna.
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h4 class="footer-heading">Layanan</h4>
+        <ul class="footer-links">
+          <li><a href="#">Creative Strategy</a></li>
+          <li><a href="#">Content Creation</a></li>
+          <li><a href="#">Social Media</a></li>
+          <li><a href="#">Performance Ads</a></li>
+          <li><a href="#">Influencer Marketing</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Perusahaan</h4>
+        <ul class="footer-links">
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Portfolio</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Karir</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Kontak</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@coco.id">hello@coco.id</a></li>
+          <li><a href="https://instagram.com/coco.id">@coco.id</a></li>
+          <li><a href="#">Jakarta, Indonesia</a></li>
+          <li><a href="#contact" style="margin-top:8px; display:inline-flex; align-items:center; gap:8px; color: rgba(135,206,235,0.9); font-weight:600;">
+            Let's Talk →
+          </a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 COCO Digital Agency. All rights reserved.</p>
+      <p class="footer-copy">Made with ✦ in Jakarta</p>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ── -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

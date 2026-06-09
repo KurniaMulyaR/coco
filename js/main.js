@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setActive();
 
   // ── Bubble Generator ───────────────────────────────────
-  const heroSection = document.querySelector('.hero-section');
+  const heroSection = document.querySelector('.hero-section, .hero-section-services');
   const bubbleCount = 18;
 
   function createBubble() {
@@ -44,9 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => b.remove(), (dur + delay) * 1000);
   }
 
-  // Initial bubbles
-  for (let i = 0; i < bubbleCount; i++) createBubble();
-  setInterval(createBubble, 1200);
+  if (heroSection) {
+    // Reveal cards in staggered order
+    document.querySelectorAll('.card').forEach((card, index) => {
+      card.classList.add('reveal', `reveal-delay-${(index % 4) + 1}`);
+    });
+
+    // Initial bubbles
+    for (let i = 0; i < bubbleCount; i++) createBubble();
+    setInterval(createBubble, 1200);
+  }
 
   // ── Scroll Reveal ──────────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal');
