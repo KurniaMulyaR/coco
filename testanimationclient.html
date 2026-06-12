@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body { background: #050505; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        /* Container utama dengan efek 3D Perspective */
+        .stage { perspective: 1000px; width: 100%; }
+        
+        .track-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            /* Efek melengkung 3D */
+            transform: rotateX(10deg);
+        }
+
+        .track { 
+            display: flex; 
+            gap: 60px; 
+            width: max-content; 
+            padding: 20px 0;
+        }
+
+        .logo-box {
+            width: 200px; height: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            /* Efek 3D pada masing-masing kartu */
+            transform-style: preserve-3d;
+        }
+
+        .logo-box img { width: 60%; opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="track" id="row1"></div>
+        <div class="track" id="row2"></div>
+        <div class="track" id="row3"></div>
+    </div>
+
+    <script>
+        // Data logo untuk 3 baris (Anda bisa ganti isi array ini)
+        const data = [
+            ["assets/ourclient/aqua.png", "assets/ourclient/bravo.png", "assets/ourclient/emina.png", "assets/ourclient/gatsby.png", "assets/ourclient/kahf.png"], // Baris 1
+            ["assets/ourclient/wardah.png", "assets/ourclient/rotio.png", "assets/ourclient/rituals.png", "assets/ourclient/yamaha.png", "assets/ourclient/kahf.png"], // Baris 2
+            ["assets/ourclient/aqua.png", "assets/ourclient/bravo.png", "assets/ourclient/emina.png", "assets/ourclient/gatsby.png", "assets/ourclient/kahf.png"] // Baris 3
+        ];
+
+        // Fungsi untuk mengisi track
+        data.forEach((row, index) => {
+            const track = document.getElementById(`row${index + 1}`);
+            // Masukkan gambar
+            row.forEach(src => {
+                track.innerHTML += `<div class="logo-box"><img src="${src}" alt="logo"></div>`;
+            });
+            // Duplikasi agar looping mulus (seamless)
+            track.innerHTML += track.innerHTML;
+        });
+
+        // Animasi GSAP (bisa diatur arah atau durasinya)
+        gsap.to("#row1", { x: "-50%", duration: 25, ease: "none", repeat: -1, overwrite: "auto" });
+        gsap.to("#row2", { x: "-50%", duration: 35, ease: "none", repeat: -1, overwrite: "auto" });
+        gsap.to("#row3", { x: "-50%", duration: 20, ease: "none", repeat: -1, overwrite: "auto" });
+    </script>
+</body>
+</html>

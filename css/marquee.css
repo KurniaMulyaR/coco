@@ -1,0 +1,177 @@
+/* =====================================================
+   COCO Agency — marquee.css
+   Skewed/tilted logo marquee ala kemana.com
+   - Logo berwarna penuh (tidak grayscale)
+   - Baris miring/melengkung (skew)
+   - Jalan terus, TIDAK pause saat hover
+   ===================================================== */
+
+/* ── Section wrapper ──────────────────────────────── */
+.clients-section {
+  background: linear-gradient(150deg, #ddeef7 0%, #eef6fb 35%, #f5f0eb 70%, #e8f3f8 100%);
+  padding: 64px 0 72px;
+  overflow: hidden;
+  position: relative;
+}
+
+
+/* ── Header ───────────────────────────────────────── */
+.eco-header {
+  text-align: center;
+  margin-bottom: 48px;
+  padding: 0 24px;
+}
+.eco-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1a4a5c;
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+.eco-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 900;
+  color: #1a4a5c;
+  line-height: 1.15;
+  margin: 0;
+}
+.eco-title em {
+  font-style: italic;
+  color: #1a6e92;
+}
+
+/* ── Marquee wrap ─────────────────────────────────── */
+.skew-marquee-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;          /* baris nempel satu sama lain seperti kemana */
+  /* Seluruh wrap di-skew sedikit ke kiri */
+  transform: skewY(-4deg);
+  margin: 0 -40px; /* sedikit overflow ke kiri-kanan */
+}
+
+/* ── Satu baris ───────────────────────────────────── */
+.skew-row {
+  display: flex;
+  overflow: hidden;
+  padding: 12px 0;
+  /* Mask fade kiri-kanan */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+/* ── Track ────────────────────────────────────────── */
+.skew-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 48px;
+  padding: 0 24px;
+  will-change: transform;
+}
+
+/* Ke kiri */
+.skew-track-left {
+  animation: skewLeft linear infinite;
+}
+/* Ke kanan */
+.skew-track-right {
+  animation: skewRight linear infinite;
+}
+
+/* TIDAK ada pause hover — jalan terus */
+
+@keyframes skewLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% / 6)); }
+}
+@keyframes skewRight {
+  0%   { transform: translateX(calc(-100% / 6)); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Logo item ────────────────────────────────────── */
+/* Tanpa card/border, logo berwarna penuh langsung */
+.skew-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Counter-skew supaya logo sendiri tegak lurus */
+  transform: skewY(4deg);
+}
+
+.skew-item img {
+  height: 44px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  /* Berwarna penuh, sedikit transparan */
+  filter: opacity(0.85);
+  transition: filter 0.3s ease, transform 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Hover logo — lebih terang saja, tidak stop */
+.skew-item:hover img {
+  filter: opacity(1) drop-shadow(0 4px 12px rgba(26,74,92,0.2));
+}
+
+/* ── Mobile ───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .skew-marquee-wrap {
+    margin: 0 -20px;
+  }
+  .skew-item img {
+    height: 34px;
+    max-width: 100px;
+  }
+  .skew-track {
+    gap: 32px;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .skew-track-left,
+  .skew-track-right {
+    animation: none;
+  }
+  .skew-marquee-wrap {
+    transform: none;
+    margin: 0;
+  }
+  .skew-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow: visible;
+  }
+  .skew-item {
+    transform: none;
+  }
+  /* Sembunyikan duplikat */
+  .skew-item:nth-child(n+8) {
+    display: none;
+  }
+}
