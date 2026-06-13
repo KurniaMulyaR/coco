@@ -12,6 +12,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Tutup menu jika klik di luar
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+    }
+  });
+
+  // Scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNavbar').classList.toggle('scrolled', window.scrollY > 10);
+  });
+
   /* ── 2. ACTIVE NAV LINK ON SCROLL ────────────── */
   const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
   const sections = [...navLinks]
@@ -120,15 +143,23 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => {
         const y = window.scrollY;
 
-        // Background — gerak lambat
+        // Background — batasi agar tidak terus bergeser
         if (parallaxBg) {
-          parallaxBg.style.transform = `translateY(${y * 0.18}px)`;
+          const bgSection = parallaxBg.closest('section');
+          const bgBottom  = bgSection ? bgSection.offsetTop + bgSection.offsetHeight : 800;
+          if (y < bgBottom) {
+            parallaxBg.style.transform = `translateY(${y * 0.18}px)`;
+          }
         }
 
-        // Bunga — gunakan data-parallax attribute
+        // Bunga — pakai transform bukan marginTop
         flowers.forEach((el) => {
           const factor = parseFloat(el.dataset.parallax || 0.22);
-          el.style.marginTop = `${-y * factor}px`;
+          const section = el.closest('section');
+          const sectionBottom = section ? section.offsetTop + section.offsetHeight : 800;
+          if (y < sectionBottom) {
+            el.style.transform = `rotate(-3deg) translateY(${-y * factor}px)`;  // gabung dengan sway
+          }
         });
 
         // Trees (services page)
@@ -137,10 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
           el.style.marginTop = `${-y * factor}px`;
         });
 
-        // Balon — gerak lebih cepat
+        // Balon
         balloons.forEach((el, i) => {
           const factor = 0.30 + (i * 0.06);
-          el.style.marginTop = `${-y * factor}px`;
+          const section = el.closest('section');
+          const sectionBottom = section ? section.offsetTop + section.offsetHeight : 800;
+          if (y < sectionBottom) {
+            el.style.transform = `translateY(${-y * factor}px)`;
+          }
         });
 
         // Pesawat — drift diagonal
@@ -152,9 +187,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Hero text — gerak paling lambat (parallax text fade)
         if (heroContent) {
-          const opacity = Math.max(0, 1 - y / 500);
-          heroContent.style.opacity    = opacity;
-          heroContent.style.marginTop  = `${-y * 0.05}px`;
+          const heroBottom = heroContent.closest('section')?.offsetHeight || 600;
+  
+          if (y < heroBottom) {
+            const opacity = Math.max(0, 1 - y / 500);
+            heroContent.style.opacity   = opacity;
+            heroContent.style.transform = `translateY(${-y * 0.05}px)`;  // ← pakai transform
+          } else {
+            // Reset saat sudah keluar hero
+            heroContent.style.opacity   = '';
+            heroContent.style.transform = '';
+          }
         }
 
         // Weare section planes

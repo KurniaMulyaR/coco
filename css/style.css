@@ -11,7 +11,11 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }cursor
 html { scroll-behavior: smooth; }
-body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
+body { font-family: 'Playfair Display', Georgia, serif;}
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
 /* ===== HERO ===== */
 .hero-section {
@@ -70,13 +74,14 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   transition: box-shadow 0.4s ease;
 }
 .navbar.scrolled {
-  background: var(--coco-teal);
   box-shadow: 0 4px 28px rgba(0,0,0,0.2);
 }
 .nav-logo {
   height: 44px; object-fit: contain;
   filter: brightness(0) invert(1);
 }
+
+/* Desktop links */
 .nav-links { display: flex; gap: 36px; list-style: none; }
 .nav-links a {
   font-family: 'DM Sans', sans-serif;
@@ -87,7 +92,6 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   padding-bottom: 6px;
   transition: opacity 0.2s;
 }
-/* Pill indicator under nav link */
 .nav-links a::after {
   content: '';
   position: absolute;
@@ -99,17 +103,16 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   background: var(--coco-white);
   border-radius: 10px 10px 0 0;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s;
-  opacity: 0; 
+  opacity: 0;
 }
 .nav-links a:hover { opacity: 0.85; }
-.nav-links a:hover::after {
-  transform: translateX(-50%) scaleX(1);
-  opacity: 1;
-}
+.nav-links a:hover::after,
 .nav-links a.active::after {
   transform: translateX(-50%) scaleX(1);
   opacity: 1;
 }
+
+/* CTA button */
 .nav-cta {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 700;
@@ -119,7 +122,76 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
 }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,74,92,0.35); }
- 
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--coco-white);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ===== MOBILE DROPDOWN MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 80px; /* sesuaikan dengan tinggi navbar */
+  left: 0; right: 0;
+  z-index: 99;
+  background: var(--coco-teal);
+  padding: 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.mobile-menu.open {
+  max-height: 320px;
+  padding: 16px 24px 28px;
+}
+.mobile-menu ul { list-style: none; }
+.mobile-menu ul li a {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--coco-white); text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s;
+}
+.mobile-menu ul li:last-child a { border-bottom: none; }
+.mobile-menu ul li a:hover { opacity: 0.75; }
+.mobile-cta {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--coco-teal); background: var(--coco-white);
+  padding: 12px 28px; border-radius: 100px;
+  text-decoration: none; letter-spacing: 0.04em;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .navbar { padding: 14px 20px; }
+  .nav-links { display: none; }   /* sembunyikan desktop links */
+  .nav-cta { display: none; }     /* sembunyikan desktop CTA */
+  .hamburger { display: flex; }   /* tampilkan hamburger */
+}
+
 /* ===== HERO CONTENT ===== */
 .hero-content {
   background: url("../assets/background_top.png") top center no-repeat;
@@ -127,10 +199,12 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   position: relative; z-index: 10;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  min-height: 50vh; max-width: 90%; text-align: center;
-  padding: 120px 40px 100px;
+  min-height: 50vh; max-width: 90%;   /* was 90% */
+  text-align: center;
+  padding: 120px 40px 60px;            /* was 120px 40px 100px */
   margin-top: 6rem;
 }
+
 .hero-tag {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px; font-weight: 700;
@@ -218,25 +292,45 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   50% { transform: scaleX(-1) translate(12px,18px) rotate(7deg); }
 }
 
-
 .flower { position: absolute; z-index: 11; animation: sway 4s ease-in-out infinite; }
-.panah{ bottom: 25px; right: 18%;  width: 180px;  animation-delay: -2.2s; }
-.flower-sun  { bottom: 20px; left: 6%;  width: 230px; }
-.flower-red  { bottom: -5px;  right: -1%; width: 200px; animation-delay: -1.2s; }
-.flower-white{ top: 11%; right: 9%; width: 280px;  animation-delay: -2.2s; }
-.flower-pink{ top: 11%; left: 9%; width: 200px;  animation-delay: -2.2s; }
+.panah       { bottom: 25px; right: 18%;  width: 180px;  animation-delay: -2.2s; }
+.flower-sun  { bottom: 20px; left: 6%;   width: 230px; }
+.flower-red  { bottom: -5px; right: -1%; width: 200px;  animation-delay: -1.2s; }
+.flower-white{ top: 11%;    right: 9%;   width: 280px;  animation-delay: -2.2s; }
+.flower-pink { top: 11%;    left: 9%;    width: 200px;  animation-delay: -2.2s; }
+
+/* ===== MOBILE — bunga & box dikecilkan ===== */
+@media (max-width: 768px) {
+  .hero-content {
+    max-width: 80%;
+    padding: 60px 24px 60px;
+    margin-top: 30px !important;
+    margin-left: 45px;
+  }
+
+  .panah       { top: 45%; width: 60px; right: 24%; }
+  .flower-sun  { width: 110px; top: 45% }
+  .flower-red  { width: 100px; right: 0; top: 45%  }
+  .flower-white{ width: 100px; top: 6%; right: -2%;}
+  .flower-pink { width: 100px; top: 7%; left: 3%; }
+
+  .hero-section {
+    overflow-x: hidden;
+  }
+}
+
 @keyframes sway {
   0%,100% { transform: rotate(-3deg) translateY(0); }
   50% { transform: rotate(3deg) translateY(-5px); }
 }
 
-.balloon { position: absolute; z-index: 4; animation: balloonFloat 7s ease-in-out infinite; }
+/* .balloon { position: absolute; z-index: 4; animation: balloonFloat 7s ease-in-out infinite; }
 .balloon-large { top: 8%; left: 2%;  width: 150px; }
 .balloon-small { top: 24%; right:0; width: 85px; animation-delay: -2.5s; }
 @keyframes balloonFloat {
   0%,100% { transform: translateY(0) rotate(-3deg); }
   50% { transform: translateY(-22px) rotate(3deg); }
-}
+} */
 
 .scroll-indicator {
   position: absolute; bottom: 36px; left: 50%;
@@ -405,6 +499,48 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   50% { transform: scale(1.06); }
 }
 
+/* ===== WE ARE COCO — MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Body padding lebih kecil */
+  .weare-body {
+    padding: 85px 24px 60px;
+  }
+
+  /* Grid jadi 1 kolom, logo di bawah teks */
+  .weare-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Logo center & lebih kecil */
+  .weare-logo {
+    width: min(200px, 70%);
+  }
+
+  /* Desc max-width full */
+  .weare-desc {
+    max-width: 100%;
+  }
+
+  /* Torn bottom lebih pendek */
+  .torn-bottom {
+    height: 160px;
+  }
+
+  /* Pesawat dikecilkan & posisi disesuaikan */
+  .weare-plane-left {
+    width: 180px;
+    left: -3rem !important;
+    bottom: 0px;
+  }
+  .weare-plane-right {
+    width: 220px;
+    right: -4rem !important;
+    bottom: 20px;
+  }
+}
+
 /* ===== OUR BELIEF SYSTEM SECTION ===== */
 .belief-section {
   min-height: 700px;
@@ -523,6 +659,66 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   .belief-row-2 { max-width: 100%; }
   .belief-card { max-width: 400px; width: 100%; }
   .belief-section { padding: 80px 24px 90px; }
+
+   /* Section padding */
+  .belief-section {
+    padding: 60px 0px 80px;
+  }
+
+  /* Background image tetap full */
+  .belief-bg {
+    margin-top: -2rem;
+    height: 200vh;
+  }
+
+  /* Inner container gap lebih kecil */
+  .belief-inner {
+    gap: 20px;
+  }
+
+  /* Title badge — padding dikurangi, no white-space nowrap */
+  .belief-title-wrap {
+    padding: 20px 28px;
+    margin-top: 6rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .belief-title {
+    font-size: clamp(22px, 6vw, 30px);
+    white-space: normal;
+    -webkit-text-stroke: 2px white;
+  }
+
+  /* Row jadi 1 kolom */
+  .belief-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .belief-row-2 {
+    max-width: 100%;
+  }
+
+  /* Card full width */
+  .belief-card {
+    max-width: 75%;
+    width: 100%;
+    padding: 22px 20px 26px;
+  }
+
+  /* Icon dikecilkan */
+  .belief-icon {
+    width: 72px;
+    height: 72px;
+  }
+  .belief-icon2 {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Balon disembunyikan di mobile — ganggu layout */
+  .balloon {
+    display: none;
+  }
 }
 .ourbelief-bg {
   top: 0; left: 0;
@@ -766,6 +962,12 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   color: rgba(255,255,255,0.45);
 }
 
+@media (max-width: 768px) {
+  .footer {
+    margin-top: 0;
+  }
+}
+
 /* ===== SCROLL REVEAL ===== */
 .reveal {
   opacity: 0; transform: translateY(32px);
@@ -866,6 +1068,26 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   50%      { transform: scale(-1, 1) rotate(3deg) translateY(-5px); }
 }
 
+@media (max-width: 768px) {
+  .hero-section-services{min-height: 50vh}
+  .hero-content-services { padding: 0px 24px 60px; justify-content: start; }
+  .coco-text { font-size: 2.5rem;
+        padding: 0 60px;
+        font-weight: bold;
+        -webkit-text-stroke: 1.5px #fff }
+  .tree-sun {
+    width: 5rem;
+    top: 30%;
+    left: -1rem;
+    z-index: 99;
+  }
+  .tree-red{
+    width: 5rem;
+    top: 30%;
+    right: 1rem;
+    z-index: 99;
+  }
+}
 
 /* Card - Services */
 
@@ -1008,6 +1230,103 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
     z-index: 4; 
   }
 
+  /* ===== CARD SERVICES — MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Background image */
+  .card-services-bg {
+    margin-top: -4rem;
+    height: 102%;
+  }
+
+  /* Section padding atas bawah */
+  .card-services-section {
+    padding: 60px 0 80px;
+  }
+
+  /* Wrapper jarak antar row */
+  .cards-wrapper {
+    margin-top: 2rem;
+    gap: 60px;
+    padding: 16px;
+  }
+
+  /* Card full width, tinggi auto */
+  .card {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Image wrap tinggi dikurangi */
+  .card-img-wrap {
+    height: 200px;
+    top: -3.5rem;
+    margin: 0 0.5rem;
+  }
+
+  .card-img-wrap img {
+    width: 95%;
+    height: 100%;
+  }
+
+  /* Body margin disesuaikan */
+  .card-body {
+    margin-top: -2.5rem;
+    padding: 16px 16px 24px;
+  }
+
+  .card-title {
+    font-size: 18px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+  }
+
+  /* ── Dekorasi dikecilkan ── */
+  .panah-services {
+    width: 90px;
+    top: -50px;
+    right: 4%;
+  }
+
+  .tangan-services {
+    width: 90px;
+    top: 16rem;
+    left: 4%;
+  }
+
+  .loading-services {
+    width: 180px;
+    top: 42rem;
+  }
+
+  .file-services {
+    width: 100px;
+    bottom: auto;
+    top: 60rem;
+  }
+
+  .move-services {
+    width: 90px;
+    bottom: 18rem;
+  }
+
+  .timer-services {
+    width: 70px;
+    bottom: 8rem;
+  }
+
+  .tangan2-services {
+    width: 100px;
+    left: 2rem;
+    bottom: 0rem;
+    z-index: 9;
+  }
+}
+
 /* OUR CLIENT */
 
 .card-client-section {
@@ -1136,3 +1455,62 @@ body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden;}
   left: -1rem;
 }
 .bunga-left  {width: 13rem; animation-delay: -1.2s; right: -1rem;}
+
+/* ===== CONTACT / CLIENT SECTION — MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Section padding */
+  .card-client-section {
+    padding-top: 0.5rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Clients grid jadi 2 kolom */
+  .clients-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 12px;
+    padding: 0 16px;
+  }
+
+  /* Contact section */
+  .contact-section {
+    margin-top: 4rem;
+    padding: 60px 24px 80px;
+  }
+
+  .contact-title {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .contact-divider {
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+
+  /* Form full width */
+  .contact-form {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 11px 12px;
+  }
+
+  .btn-send {
+    width: 100%;
+    padding: 13px 24px;
+    font-size: 15px;
+  }
+
+  /* Bunga dikecilkan & posisi disesuaikan */
+  .bunga-right {
+    display: none;
+  }
+  .bunga-left {
+    display: none;
+  }
+}
