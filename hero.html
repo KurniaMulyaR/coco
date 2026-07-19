@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Chrome Ribbon Hero — Coco</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: #000;
+  }
+  #hero {
+    position: relative;
+    width: 100%; height: 100vh;
+    background: #000;
+  }
+  canvas { display: block; }
+  .hero-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+    padding: 0 1.5rem;
+  }
+  .hero-content h1 {
+    color: #f5f5f5;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-shadow: 0 0 40px rgba(0,0,0,0.9);
+  }
+  .hero-content h1 b {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .hero-content p {
+    color: rgba(255,255,255,0.5);
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<div id="hero">
+  <div class="hero-content">
+    <h1>Connecting <b>BRAND</b><br>with the <b>RIGHT VOICES</b></h1>
+    <p>Chrome ribbon 3D — metalness + environment reflection, bukan shader noise 2D</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  const container = document.getElementById('hero');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+
+  const camera = new THREE.PerspectiveCamera(
+    45, container.clientWidth / container.clientHeight, 0.1, 100
+  );
+  camera.position.set(0, 0, 9);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+  container.appendChild(renderer.domElement);
+
+  // ---- Environment map procedural: dibuat dari beberapa "panel" gradient terang di gelap ----
+  // Ini yang jadi sumber refleksi tajam di permukaan chrome (mirip studio HDRI softbox)
+  function buildEnvMap() {
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+
+    const size = 512;
+    const canvas = document.createElement('canvas');
+    canvas.width = size * 2;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+
+    // dasar hitam
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // beberapa softbox terang (garis putih/biru) sebagai sumber cahaya studio
+    function softbox(x, y, w, h, color) {
+      const grad = ctx.createLinearGradient(x, y, x + w, y + h);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(0.5, color);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(x, y, w, h);
+    }
+
+    softbox(100, 50, 500, 60, 'rgba(255,255,255,0.95)');
+    softbox(300, 200, 700, 40, 'rgba(160,200,255,0.85)');
+    softbox(600, 350, 400, 80, 'rgba(255,255,255,0.9)');
+    softbox(50, 380, 350, 30, 'rgba(120,170,255,0.7)');
+    softbox(800, 100, 250, 250, 'rgba(255,255,255,0.6)');
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    texture.encoding = THREE.sRGBEncoding;
+
+    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+    texture.dispose();
+    pmremGenerator.dispose();
+    return envMap;
+  }
+
+  scene.environment = buildEnvMap();
+
+  // ---- Kurva pita: beberapa titik kontrol acak membentuk lekukan pita mengalir ----
+  function makeRibbonCurve(seed) {
+    const points = [];
+    const n = 8;
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1);
+      points.push(new THREE.Vector3(
+        (t - 0.5) * 14,
+        Math.sin(t * Math.PI * 2 + seed) * 2.2 + (seed * 0.7),
+        Math.cos(t * Math.PI * 1.5 + seed) * 2.0
+      ));
+    }
+    return new THREE.CatmullRomCurve3(points);
+  }
+
+  const ribbons = [];
+  function createRibbon(seed, radius, tubularSeg) {
+    const curve = makeRibbonCurve(seed);
+    const geometry = new THREE.TubeGeometry(curve, tubularSeg, radius, 12, false);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      metalness: 1.0,
+      roughness: 0.12,
+      envMapIntensity: 1.6
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    ribbons.push({ mesh, curve, seed });
+    return mesh;
+  }
+
+  createRibbon(0.0, 0.55, 200);
+  createRibbon(2.3, 0.35, 200);
+  createRibbon(4.6, 0.25, 160);
+
+  // ---- Sparkle bintang chrome kecil ----
+  function createStarShape(size) {
+    const shape = new THREE.Shape();
+    const spikes = 4;
+    const outer = size, inner = size * 0.22;
+    for (let i = 0; i < spikes * 2; i++) {
+      const r = i % 2 === 0 ? outer : inner;
+      const a = (i / (spikes * 2)) * Math.PI * 2;
+      const x = Math.cos(a) * r, y = Math.sin(a) * r;
+      i === 0 ? shape.moveTo(x, y) : shape.lineTo(x, y);
+    }
+    shape.closePath();
+    return shape;
+  }
+
+  const starMat = new THREE.MeshStandardMaterial({
+    color: 0xffffff, metalness: 1.0, roughness: 0.15, envMapIntensity: 1.8
+  });
+
+  const starPositions = [
+    [-5.5, 2.2, 1], [4.8, -1.8, 0.5], [2.0, 3.0, -0.5]
+  ];
+  const stars = [];
+  starPositions.forEach(([x, y, z], i) => {
+    const size = 0.5 + i * 0.15;
+    const geo = new THREE.ExtrudeGeometry(createStarShape(size), { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02, bevelSegments: 2 });
+    const mesh = new THREE.Mesh(geo, starMat);
+    mesh.position.set(x, y, z);
+    scene.add(mesh);
+    stars.push(mesh);
+  });
+
+  // Sedikit lampu tambahan biar ada dimensi (selain env reflection)
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0.6);
+  keyLight.position.set(3, 4, 5);
+  scene.add(keyLight);
+  scene.add(new THREE.AmbientLight(0x223344, 0.3));
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+
+  const clock = new THREE.Clock();
+  function animate() {
+    const t = clock.getElapsedTime();
+
+    ribbons.forEach((r, i) => {
+      r.mesh.rotation.z = Math.sin(t * 0.1 + i) * 0.15;
+      r.mesh.rotation.x = Math.cos(t * 0.08 + i) * 0.1;
+    });
+
+    stars.forEach((s, i) => {
+      s.rotation.z = t * (0.3 + i * 0.1);
+      s.rotation.y = t * (0.2 + i * 0.05);
+      s.position.y += Math.sin(t * 0.6 + i) * 0.0015;
+    });
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+</body>
+</html>

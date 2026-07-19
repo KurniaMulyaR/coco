@@ -1,15 +1,16 @@
 /* ===== COCO DIGITAL AGENCY - Custom Styles ===== */
 
 :root {
-  --coco-teal: #1a4a5c;
+  --coco-teal: #000;
   --coco-teal-mid: #0d3a4a;
   --coco-sky: #87ceeb;
   --coco-pink: #e8a0b0;
   --coco-white: #ffffff;
   --coco-cream: #f5f0eb;
+  --coco-lime: #00E695;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }cursor
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Playfair Display', Georgia, serif;}
 html, body {
@@ -17,18 +18,112 @@ html, body {
   max-width: 100%;
 }
 
-/* ===== HERO ===== */
+/* =========================================================
+   HERO (HOMEPAGE) — versi baru, semua rules disatukan di sini
+   ========================================================= */
 .hero-section {
   position: relative;
-  width: 100%; min-height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   overflow: hidden;
-  background: linear-gradient(180deg, #d0eaf8 0%, #87ceeb 35%, #5ab5e8 65%, #87ceeb 100%);
+  background: #05070a;
+  display: flex;
+  align-items: center; /* vertical center */
 }
 
 .hero-bg {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; z-index: 0;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.05) 75%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 48px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-left: 18rem;
+}
+
+.hero-content h1 {
+  line-height: 1.15;
+  margin: 0;
+  max-width: 780px;
+}
+
+.hero-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(36px, 6vw, 72px);
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.hero-bold {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 900;
+  font-size: clamp(38px, 6.5vw, 76px);
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6); /* tetap kebaca walau ketiban bagian terang background */
+}
+
+.hero-title-underline {
+  position: relative;
+  display: inline-block;
+}
+.hero-title-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -6px;
+  height: 5px;
+  background: var(--coco-lime);
+  border-radius: 2px;
+}
+
+/* Bintang dekoratif */
+.flower {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+.star-bottom-left {
+  width: 22rem;
+  left: 0%;
+  bottom: 5%;
+}
+.star-right-mid {
+  width: 14rem;
+  right: 21%;
+  top: 23%;
+  rotate: 121deg
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 100px 24px 60px;
+  }
+  .hero-content h1 { max-width: 100%; }
+
+  .hero-serif  { font-size: clamp(28px, 8vw, 40px); }
+  .hero-bold   { font-size: clamp(30px, 9vw, 44px); }
+
+  .star-bottom-left { width: 100px; bottom: 6%; left: 2%; }
+  .star-right-mid   { width: 70px; top: 32%; right: 6%; }
+
+  .hero-section { overflow-x: hidden; }
 }
 
 /* Bubbles */
@@ -100,7 +195,7 @@ html, body {
   transform: translateX(-50%) scaleX(0);
   width: 120%;
   height: 8px;
-  background: var(--coco-white);
+  background: var(--coco-lime);
   border-radius: 10px 10px 0 0;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s;
   opacity: 0;
@@ -184,7 +279,7 @@ html, body {
   text-decoration: none; letter-spacing: 0.04em;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE (Navbar) ===== */
 @media (max-width: 768px) {
   .navbar { padding: 14px 20px; }
   .nav-links { display: none; }   /* sembunyikan desktop links */
@@ -192,19 +287,18 @@ html, body {
   .hamburger { display: flex; }   /* tampilkan hamburger */
 }
 
-/* ===== HERO CONTENT ===== */
-.hero-content {
-  background: url("../assets/background_top.png") top center no-repeat;
-  background-size: cover;
-  position: relative; z-index: 10;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  min-height: 50vh; max-width: 90%;   /* was 90% */
-  text-align: center;
-  padding: 120px 40px 60px;            /* was 120px 40px 100px */
-  margin-top: 6rem;
-}
-
+/* =========================================================
+   LEGACY HERO (HOMEPAGE) — desain versi lama.
+   Sepertinya sudah TIDAK dipakai lagi setelah hero baru
+   (.hero-serif / .hero-bold) dipasang, karena:
+   - HTML pesawat kertas (.plane-right / .plane-left) sudah
+     dikomentari di file blade/html kamu.
+   - .hero-title / .hero-title-dua tidak lagi dipanggil di
+     markup hero yang baru.
+   Dibiarkan di sini (bukan dihapus) supaya aman kalau ada
+   halaman lain yang masih pakai class ini. Cek dulu sebelum
+   benar-benar dihapus.
+   ========================================================= */
 .hero-tag {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px; font-weight: 700;
@@ -232,14 +326,6 @@ html, body {
   letter-spacing: -0.025em;
   animation: fadeSlideDown 0.8s 0.15s ease both;
   margin-top : 0.8rem;
-}
-.hero-title-underline{
-  /* keep text color same as title but underline in yellow */
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: rgba(203, 236, 12, 0.78);
-  text-decoration-thickness: 0.2em;
-  text-underline-offset: 0.12em;
 }
 .hero-title em { font-style: italic; color: #1a6e92; }
 .hero-subtitle {
@@ -269,7 +355,8 @@ html, body {
   from { opacity: 0; transform: translateY(-20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* Decorative elements */
+
+/* Decorative elements (pesawat kertas — lama) */
 .plane {
   position: absolute; z-index: 5;
   filter: drop-shadow(0 6px 18px rgba(0,0,0,0.12));
@@ -292,45 +379,12 @@ html, body {
   50% { transform: scaleX(-1) translate(12px,18px) rotate(7deg); }
 }
 
-.flower { position: absolute; z-index: 11; animation: sway 4s ease-in-out infinite; }
+/* Decorative elements (bunga — lama, dipakai bareng .flower base di atas) */
 .panah       { bottom: 25px; right: 18%;  width: 180px;  animation-delay: -2.2s; }
 .flower-sun  { bottom: 20px; left: 6%;   width: 230px; }
 .flower-red  { bottom: -5px; right: -1%; width: 200px;  animation-delay: -1.2s; }
 .flower-white{ top: 11%;    right: 9%;   width: 280px;  animation-delay: -2.2s; }
 .flower-pink { top: 11%;    left: 9%;    width: 200px;  animation-delay: -2.2s; }
-
-/* ===== MOBILE — bunga & box dikecilkan ===== */
-@media (max-width: 768px) {
-  .hero-content {
-    max-width: 80%;
-    padding: 60px 24px 60px;
-    margin-top: 30px !important;
-    margin-left: 45px;
-  }
-
-  .panah       { top: 45%; width: 60px; right: 24%; }
-  .flower-sun  { width: 110px; top: 45% }
-  .flower-red  { width: 100px; right: 0; top: 45%  }
-  .flower-white{ width: 100px; top: 6%; right: -2%;}
-  .flower-pink { width: 100px; top: 7%; left: 3%; }
-
-  .hero-section {
-    overflow-x: hidden;
-  }
-}
-
-@keyframes sway {
-  0%,100% { transform: rotate(-3deg) translateY(0); }
-  50% { transform: rotate(3deg) translateY(-5px); }
-}
-
-/* .balloon { position: absolute; z-index: 4; animation: balloonFloat 7s ease-in-out infinite; }
-.balloon-large { top: 8%; left: 2%;  width: 150px; }
-.balloon-small { top: 24%; right:0; width: 85px; animation-delay: -2.5s; }
-@keyframes balloonFloat {
-  0%,100% { transform: translateY(0) rotate(-3deg); }
-  50% { transform: translateY(-22px) rotate(3deg); }
-} */
 
 .scroll-indicator {
   position: absolute; bottom: 36px; left: 50%;
@@ -364,7 +418,7 @@ html, body {
 /* ==== WE ARE COCO ==== */
 .weare-bg {
   position: absolute; top: 0; left: 0;
-  margin-top: -12rem;
+  margin-top: -3rem;
   width: 100%;
 }
 
@@ -372,7 +426,7 @@ html, body {
   position: relative;
   z-index: 3;
 }
- 
+
 /* ── Torn top ── */
 .torn-top {
   position: relative;
@@ -390,13 +444,13 @@ html, body {
   /* flip vertically so torn edge faces down */
   transform: scaleY(-1);
 }
- 
+
 /* ── White body ── */
 .weare-body {
-  padding: 60px 64px 80px;
+  padding: 95px 66px 80px;
   position: relative; z-index: 3;
 }
- 
+
 .weare-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -405,7 +459,7 @@ html, body {
   margin: 0 auto;
   align-items: center;
 }
- 
+
 /* Title */
 .weare-title {
   font-family: 'Playfair Display', serif;
@@ -415,27 +469,28 @@ html, body {
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin-bottom: 16px;
+  margin-right: 2rem;
   /* Outline / stroke effect like the design */
   -webkit-text-stroke: 1px var(--coco-teal);
 }
- 
+
 /* Yellow rule below title */
 .weare-rule {
   width: 100%;
   height: 4px;
-  background: #e8b84b;
-  border-radius: 2px;
+  background: var(--coco-lime);
+  border-radius: 4px;
   margin-bottom: 28px;
 }
- 
+
 .weare-desc {
   font-family: 'DM Sans', sans-serif;
-  font-size: clamp(14px, 1.5vw, 16px);
+  font-size: clamp(24px, 1.8vw, 24px);
   color: var(--coco-teal);
   line-height: 1.8;
   max-width: 480px;
 }
- 
+
 /* Logo right side */
 .weare-logo-wrap {
   display: flex;
@@ -447,7 +502,7 @@ html, body {
   object-fit: contain;
   filter: drop-shadow(0 4px 16px rgba(0,0,0,0.08));
 }
- 
+
 /* ── Torn bottom with sky ── */
 .torn-bottom {
   position: relative;
@@ -455,7 +510,7 @@ html, body {
   height: 260px;
   overflow: hidden;
 }
- 
+
 /* Torn paper overlay on bottom */
 .torn-bottom-img {
   position: absolute;
@@ -465,7 +520,7 @@ html, body {
   object-position: top;
   z-index: 2;
 }
- 
+
 /* Paper planes in sky strip */
 .weare-plane {
   position: absolute;
@@ -484,7 +539,7 @@ html, body {
   width: 500px;
   animation: planeGlideRight 12s ease-in-out infinite;
 }
- 
+
 @keyframes planeGlideLeft {
   0%,100% { transform: translate(0, 0) rotate(-4deg); }
   50%      { transform:  translate(15px, -18px) rotate(-7deg); }
@@ -493,7 +548,7 @@ html, body {
   0%,100% { transform: translate(0, 0) rotate(-10deg); }
   50%      { transform: translate(-12px, -20px) rotate(-8deg); }
 }
- 
+
 @keyframes pulseBubble {
   0%,100% { transform: scale(1); }
   50% { transform: scale(1.06); }
@@ -545,7 +600,7 @@ html, body {
 .belief-section {
   min-height: 700px;
 }
- 
+
 /* Sky background */
 .belief-bg {  
   position: absolute;
@@ -553,7 +608,7 @@ html, body {
   width: 100%;
   z-index: 1;
 }
- 
+
 /* Overlay to lighten sky slightly for readability */
 .belief-section::before {
   content: '';
@@ -561,12 +616,7 @@ html, body {
   background: rgba(255,255,255,0.18);
   z-index: 1;
 }
- 
-@keyframes floatBubble {
-  0%   { transform: translateY(0) scale(1); }
-  100% { transform: translateY(-30px) scale(1.05); }
-}
- 
+
 /* Inner container */
 .belief-inner {
   position: relative; z-index: 3;
@@ -575,7 +625,7 @@ html, body {
   display: flex; flex-direction: column;
   align-items: center; gap: 36px;
 }
- 
+
 /* Title badge — yellow pill */
 .belief-title-wrap {
   background: #e8b84b;
@@ -598,7 +648,7 @@ html, body {
     3px 3px 6px rgba(0,0,0,0.5),    /* shadow teks */
     1px 1px 0 rgba(0,0,0,0.3);
 }
- 
+
 /* Rows */
 .belief-row {
   display: flex;
@@ -606,9 +656,9 @@ html, body {
   justify-content: center;
   width: 100%;
 }
-.belief-row-3 { }
+
 .belief-row-2 { max-width: 680px; }
- 
+
 /* Card */
 .belief-card {
   background: rgba(255,255,255,0.82);
@@ -627,7 +677,7 @@ html, body {
   transform: translateY(-6px);
   box-shadow: 0 16px 40px rgba(26,74,92,0.15);
 }
- 
+
 .belief-icon {
   margin : auto;
   width: 120px;
@@ -638,21 +688,21 @@ html, body {
 .belief-icon2{
   margin-bottom: 1rem;
 }
- 
+
 .belief-card-title {
   font-family: 'Playfair Display', serif;
   font-size: 18px; font-weight: 900;
   color: var(--coco-teal);
   line-height: 1.3;
 }
- 
+
 .belief-card-desc {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   color: rgba(26,74,92,0.72);
   line-height: 1.7;
 }
- 
+
 /* Responsive */
 @media (max-width: 768px) {
   .belief-row { flex-direction: column; align-items: center; }
@@ -871,11 +921,6 @@ html, body {
 .bubble-sm-vis:nth-child(3) { width: 60px; height: 60px; bottom: 20%; left: 10%; animation-delay: -2.5s; }
 .bubble-sm-vis:nth-child(4) { width: 40px; height: 40px; top: 60%; right: 8%; animation-delay: -1.8s; }
 
-@keyframes pulseBubble {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
-}
-
 /* ===== SERVICES ===== */
 .services-section { background: var(--coco-cream); padding: 100px 48px; }
 .services-grid {
@@ -990,7 +1035,6 @@ html, body {
   .navbar { padding: 14px 20px; }
   .nav-links { display: none; }
   .footer-top { grid-template-columns: 1fr; }
-  .hero-content { padding: 100px 24px 80px; }
   .values-section, .about-section, .services-section, .footer { padding-left: 24px; padding-right: 24px; }
 }
 
@@ -1007,7 +1051,7 @@ html, body {
   object-fit: cover; z-index: 0;
 }
 
-/* ===== HERO CONTENT ===== */
+/* ===== HERO CONTENT (Services page) ===== */
 .hero-content-services {
   position: relative; z-index: 10;
   display: flex; flex-direction: column;
@@ -1018,23 +1062,6 @@ html, body {
   box-shadow: 0 8px 24px rgba(26,74,92,0.15);
 }
 
-.hero-title-underline{
-  /* keep text color same as title but underline in yellow */
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: rgba(203, 236, 12, 0.78);
-  text-decoration-thickness: 0.2em;
-  text-underline-offset: 0.12em;
-}
-.hero-title em { font-style: italic; color: #1a6e92; }
-.hero-subtitle {
-  font-family: 'DM Sans', sans-serif;
-  font-size: clamp(15px, 1.8vw, 19px);
-  color: rgba(26,74,92,0.78);
-  max-width: 520px; line-height: 1.65;
-  margin-bottom: 48px;
-  animation: fadeSlideDown 0.8s 0.3s ease both;
-}
 .coco-text {
   font-family: 'DM Sans', sans-serif;
   background: linear-gradient(90deg, #FFD700, #FFD700);
@@ -1048,12 +1075,6 @@ html, body {
   font-size: 5rem;
 }
 
-@keyframes fadeSlideDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-
 .tree { position: absolute; z-index: 11; animation: sway 4s ease-in-out infinite; z-index: 1 }
 .tree-sun { 
   top: 5rem; 
@@ -1063,6 +1084,10 @@ html, body {
 }
 .tree-red  { top: 5rem;  right: -8rem; width: 30rem; animation-delay: -1.2s; }
 
+@keyframes sway {
+  0%,100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(3deg) translateY(-5px); }
+}
 @keyframes sway-flip {
   0%,100% { transform: scale(-1, 1) rotate(-3deg) translateY(0); }
   50%      { transform: scale(-1, 1) rotate(3deg) translateY(-5px); }
