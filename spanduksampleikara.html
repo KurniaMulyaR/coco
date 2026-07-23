@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Spanduk Lapangan Mandala</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background:#1a1a1a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    font-family:'Plus Jakarta Sans', sans-serif;
+  }
+
+  .banner {
+    position:relative;
+    width:1600px;
+    aspect-ratio: 2 / 1;
+    background:
+      radial-gradient(circle at 92% 8%, rgba(212,175,55,0.18), transparent 40%),
+      linear-gradient(160deg, #0d3d30 0%, #0a2e26 55%, #082720 100%);
+    overflow:hidden;
+    border:10px solid #d4af37;
+    outline: 3px solid #0d3d30;
+    outline-offset: -18px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Tekstur pola titik samar - motif lisan/ucapan */
+  .banner::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: radial-gradient(rgba(212,175,55,0.10) 2px, transparent 2px);
+    background-size: 34px 34px;
+    pointer-events:none;
+  }
+
+  .eyebrow-row{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:34px 56px 0 56px;
+  }
+
+  .eyebrow{
+    font-size:20px;
+    letter-spacing:3px;
+    font-weight:700;
+    color:#d4af37;
+    text-transform:uppercase;
+  }
+
+  .arabic{
+    font-family:'Amiri', serif;
+    font-size:30px;
+    color:#f6f1e4;
+    opacity:0.85;
+  }
+
+  .main{
+    position:relative;
+    z-index:2;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 70px;
+  }
+
+  .headline{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    color:#f6f1e4;
+    font-size:92px;
+    line-height:1.02;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    max-width:1300px;
+  }
+
+  .headline .accent{
+    color:#e0623f;
+    position:relative;
+    display:inline-block;
+  }
+
+  .headline .accent::after{
+    content:"";
+    position:absolute;
+    left:-4px; right:-4px; bottom:6px;
+    height:14px;
+    background:rgba(224,98,63,0.28);
+    z-index:-1;
+    transform:skewX(-8deg);
+  }
+
+  .sub{
+    margin-top:26px;
+    font-size:30px;
+    font-weight:600;
+    color:#d4af37;
+    max-width:1050px;
+  }
+
+  .stamps{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:center;
+    gap:26px;
+    padding:0 60px 6px 60px;
+  }
+
+  .stamp{
+    border:2.5px solid #d4af37;
+    border-radius:999px;
+    padding:12px 26px;
+    font-size:19px;
+    font-weight:700;
+    color:#f6f1e4;
+    background:rgba(212,175,55,0.07);
+    transform:rotate(-1.4deg);
+    white-space:nowrap;
+  }
+  .stamp:nth-child(2){ transform:rotate(1deg); }
+  .stamp:nth-child(3){ transform:rotate(-0.8deg); }
+
+  .footer{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:26px 56px 30px 56px;
+    border-top:1.5px solid rgba(212,175,55,0.35);
+    margin-top:28px;
+  }
+
+  .hadith{
+    font-size:18px;
+    color:#c9c3b0;
+    font-style:italic;
+    max-width:980px;
+    line-height:1.4;
+  }
+
+  .hadith b{
+    color:#d4af37;
+    font-style:normal;
+  }
+
+  .credit{
+    font-size:17px;
+    font-weight:700;
+    color:#f6f1e4;
+    text-align:right;
+    white-space:nowrap;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .credit span{
+    display:block;
+    font-size:13px;
+    font-weight:500;
+    color:#9fb3a8;
+    text-transform:none;
+    letter-spacing:0;
+    margin-top:2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="banner">
+    <div class="eyebrow-row">
+      <div class="eyebrow">Untuk Remaja &amp; Anak-Anak Lapangan Mandala</div>
+      <div class="arabic">﴿ وَاِنَّكَ لَعَلٰى خُلُقٍ عَظِيْمٍ ﴾</div>
+    </div>
+
+    <div class="main">
+      <div class="headline">
+        NGOMONG <span class="accent">KASAR</span> KOK BANGGA?<br>
+        NABI AJA GA PERNAH GITU.
+      </div>
+      <div class="sub">
+        Yuk jaga lisan &amp; sikap di manapun kita berada — biar makin mirip Rasulullah, bukan makin mirip sinetron.
+      </div>
+    </div>
+
+    <div class="stamps">
+      <div class="stamp">SOPAN ITU KEREN</div>
+      <div class="stamp">AKHLAK GA BUTUH DRAMA</div>
+      <div class="stamp">JAGA UCAPAN, JAGA TEMAN</div>
+    </div>
+
+    <div class="footer">
+      <div class="hadith">
+        <b>“Sesungguhnya aku diutus untuk menyempurnakan akhlak yang mulia.”</b><br>
+        — HR. Ahmad
+      </div>
+      <div class="credit">
+        Peduli Akhlak Generasi Muda
+        <span>Lapangan Mandala</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
