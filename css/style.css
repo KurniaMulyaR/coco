@@ -1454,102 +1454,174 @@ html, body {
   margin-top: -2rem;
 }
 
-.clients-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px 16px;
-  max-width: 800px;
-  margin: 0 auto;
-  align-items: center;
-  justify-items: center;
-}
+.stage {
+    width: 100%;
+    max-width: 1500px;
+    height: 140px;
+    position: relative;
+    /* fade edges kiri-kanan */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+ 
+  /* === scene 3D, setara div "Carousel" di devtools === */
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 500px;
+  }
+ 
+  /* === "Arms": bagian yang berputar terus menerus === */
+  .arms {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation-name: spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+ 
+  /* baris genap muter searah jarum jam, ganjil sebaliknya, biar tidak monoton */
+  .dir-cw  { animation-direction: normal; }
+  .dir-ccw { animation-direction: reverse; }
+ 
+  @keyframes spin {
+    from { transform: rotateY(0deg); }
+    to   { transform: rotateY(360deg); }
+  }
+ 
+  /* === tiap "Arm N": satu logo di tepi lingkaran 3D === */
+  .arm {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 120px;
+    height: 100%;
+    margin-left: -100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+  }
+ 
+  .arm img {
+    max-height: 48px;
+    max-width: 200px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: filter 0.25s ease;
+  }
+ 
+  .arm img:hover {
+    filter: grayscale(0%) opacity(1);
+  }
+ 
+  .stage:hover .arms { animation-play-state: paused; }
 
-.clients-grid img {
-  max-width: 130px;
-  max-height: 80px;
-  width: 100%;
-  object-fit: contain;
-  transition: filter 0.3s, transform 0.3s;
-}
-
-.clients-grid img:hover {
-  filter: grayscale(30%);
-  transform: scale(1.05);
-}
-
-.contact-section {
-  background: url('/assets/ourclient/notes.png') no-repeat top center;
-  width: 100%;
-  height: 100%;
-  margin-top: 10rem;
-  padding: 100px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.contact-title {
-  font-family: Georgia, serif;
-  font-size: 36px;
-  font-weight: 900;
-  color: #1a3a5c;
-  -webkit-text-stroke: 3px white;
-  paint-order: stroke fill;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
-  margin: 0 0 8px;
-}
-.contact-divider {
-  width: 100%;
-  max-width: 460px;
-  height: 2px;
-  background: #d4b96a;
-  margin: 0 auto 32px;
-}
-.contact-form {
-  width: 100%;
-  max-width: 460px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.form-group label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #333;
-}
-.form-group input,
-.form-group textarea {
-  background: #f5f5f5;
-  border: 1.5px solid #d4b96a;
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-size: 13px;
-  color: #555;
-  outline: none;
-  resize: none;
-}
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #b8960a;
-}
-.form-group textarea { height: 120px; }
-.btn-send {
-  align-self: center;
-  background: #e8c44a;
-  color: #1a3a5c;
-  font-size: 14px;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 32px;
-  cursor: pointer;
-}
-.btn-send:hover { background: #d4b030; }
+ .form-card{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:420px;
+    padding:32px 28px 36px;
+    border-radius:16px;
+    background:rgba(4,10,12,.55);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1.5px solid var(--teal);
+    box-shadow:
+      0 0 14px var(--teal-glow),
+      0 0 40px rgba(47,232,212,.25),
+      inset 0 0 16px rgba(47,232,212,.08);
+  }
+ 
+  .form-title{
+    margin:0 0 18px;
+    text-align:center;
+    font-weight:800;
+    font-size:26px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#ffffff;
+    text-shadow:0 0 18px rgba(255,255,255,.35);
+  }
+ 
+  .divider{
+    height:1px;
+    margin:0 0 22px;
+    background:linear-gradient(90deg, transparent, rgba(47,232,212,.6), transparent);
+  }
+ 
+  .field{
+    margin-bottom:16px;
+  }
+ 
+  .field label{
+    display:block;
+    margin-bottom:6px;
+    font-size:12.5px;
+    font-weight:600;
+    color:#f2f2f2;
+  }
+ 
+  .field input,
+  .field textarea{
+    width:100%;
+    padding:11px 14px;
+    border-radius:8px;
+    border:1px solid rgba(47,232,212,.45);
+    background:rgba(255,255,255,.03);
+    color:#e8f7f5;
+    font-family:inherit;
+    font-size:13px;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s;
+  }
+ 
+  .field input::placeholder,
+  .field textarea::placeholder{
+    color:rgba(230,240,238,.4);
+    font-style:italic;
+  }
+ 
+  .field input:focus,
+  .field textarea:focus{
+    border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(47,232,212,.18);
+  }
+ 
+  .field textarea{
+    resize:vertical;
+    min-height:110px;
+  }
+ 
+  .submit-row{
+    margin-top:22px;
+    display:flex;
+    justify-content:center;
+  }
+ 
+  .submit-btn{
+    padding:11px 30px;
+    border:none;
+    border-radius:24px;
+    background:linear-gradient(180deg, #3ff0dc, #1fc9b7);
+    color:#04211d;
+    font-weight:700;
+    font-size:13.5px;
+    letter-spacing:.3px;
+    cursor:pointer;
+    box-shadow:0 0 16px rgba(47,232,212,.5);
+    transition:transform .15s, box-shadow .15s;
+  }
+ 
+  .submit-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 0 22px rgba(47,232,212,.7);
+  }
 
 
 .bunga { position: absolute; animation: sway 4s ease-in-out infinite; z-index: 11; }
