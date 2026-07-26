@@ -101,7 +101,7 @@
 /* ── 5. PESAWAT / PLANE PARALLAX ─────────────────── */
 
 .weare-plane-left {
-  animation: planeGlideLeft 10s ease-in-out infinite;
+  animation: star-float 4s ease-in-out infinite, star-spin-offset 8s linear infinite;
 }
 .weare-plane-right {
   animation: planeGlideRight 12s ease-in-out infinite;

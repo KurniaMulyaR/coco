@@ -1,3 +1,5 @@
+@import url('https://googleapis.com');
+
 /* ===== COCO DIGITAL AGENCY - Custom Styles ===== */
 
 :root {
@@ -51,28 +53,27 @@ html, body {
   padding: 0 48px;
   box-sizing: border-box;
   text-align: center;
-  margin-left: 18rem;
+  margin-left: 12rem;
 }
 
 .hero-content h1 {
   line-height: 1.15;
   margin: 0;
-  max-width: 840px;
+  max-width: 960px;
 }
 
 .hero-serif {
-  font-family: 'Playfair Display', serif;
+  font-family: "Bodoni Moda", serif;
   font-weight: 400;
-  font-style: italic;
-  font-size: clamp(36px, 6vw, 72px);
+  font-size: 100px;
   color: #ffffff;
   letter-spacing: -0.01em;
 }
 
 .hero-bold {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 900;
-  font-size: 55px;
+  font-size: 70px;
   color: #ffffff;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -98,17 +99,52 @@ html, body {
   position: absolute;
   z-index: 1;
   pointer-events: none;
+  animation: star-float 4s ease-in-out infinite, star-spin 8s linear infinite;
 }
+
 .star-bottom-left {
   width: 22rem;
   left: 0%;
   bottom: 5%;
+  animation-delay: 0s, 0s;
 }
+
 .star-right-mid {
   width: 14rem;
-  right: 21%;
+  right: 18%;
   top: 23%;
-  rotate: 121deg
+  animation: star-float 4s ease-in-out infinite, star-spin-offset 8s linear infinite;
+  animation-delay: 0.8s, 0s;
+}
+
+/* Gerakan naik-turun pelan */
+@keyframes star-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* Muter 360 derajat dari posisi 0 (buat star-bottom-left) */
+@keyframes star-spin {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Muter 360 derajat tapi mulai dari 121deg (buat star-right-mid) */
+@keyframes star-spin-offset {
+  from {
+    rotate: 121deg;
+  }
+  to {
+    rotate: 481deg;
+  }
 }
 
 @media (max-width: 768px) {
@@ -172,7 +208,7 @@ html, body {
   box-shadow: 0 4px 28px rgba(0,0,0,0.2);
 }
 .nav-logo {
-  height: 44px; object-fit: contain;
+  height: 75px; object-fit: contain;
   filter: brightness(0) invert(1);
 }
 
@@ -418,13 +454,15 @@ html, body {
 /* ==== WE ARE COCO ==== */
 .weare-bg {
   position: absolute; top: 0; left: 0;
-  margin-top: -3rem;
   width: 100%;
 }
 
 .weare-section {
   position: relative;
-  z-index: 3;
+}
+
+.img-weare-star{
+  height: 65%;
 }
 
 /* ── Torn top ── */
@@ -447,7 +485,7 @@ html, body {
 
 /* ── White body ── */
 .weare-body {
-  padding: 95px 66px 80px;
+  padding: 125px 600px 0px 380px;
   position: relative; z-index: 3;
 }
 
@@ -462,14 +500,19 @@ html, body {
 
 /* Title */
 .weare-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 900;
-  color: var(--coco-teal);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-  margin-right: 2rem;
+  /* Menggunakan font dengan sudut tajam & potongan tegas */
+  font-family: "Syne", "Space Grotesk", sans-serif;
+  font-weight: 800;
+  
+  /* Ukuran dan warna teks (abu-abu gelap sesuai gambar) */
+  font-size: 64px;
+  color: #4A5156;
+  text-transform: uppercase;
+  
+  /* Kunci layout rapat seperti di gambar */
+  line-height: 0.85;       /* Merapatkan jarak vertikal antara kata WE dan ARE */
+  letter-spacing: -2px;    /* Merapatkan jarak horizontal antar-huruf */
+  
   /* Outline / stroke effect like the design */
   -webkit-text-stroke: 1px var(--coco-teal);
 }
@@ -499,13 +542,13 @@ html, body {
 }
 .weare-logo {
   width: min(340px, 90%);
+  margin-bottom: 1rem;
   object-fit: contain;
   filter: drop-shadow(0 4px 16px rgba(0,0,0,0.08));
 }
 
 /* ── Torn bottom with sky ── */
 .torn-bottom {
-  position: relative;
   width: 100%;
   height: 260px;
   overflow: hidden;
@@ -527,27 +570,7 @@ html, body {
   z-index: 1;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
 }
-.weare-plane-left {
-  left: -10rem;
-  bottom: 0px;
-  width: 300px;
-  animation: planeGlideLeft 10s ease-in-out infinite;
-}
-.weare-plane-right {
-  right: -10rem;
-  bottom: 50px;
-  width: 500px;
-  animation: planeGlideRight 12s ease-in-out infinite;
-}
 
-@keyframes planeGlideLeft {
-  0%,100% { transform: translate(0, 0) rotate(-4deg); }
-  50%      { transform:  translate(15px, -18px) rotate(-7deg); }
-}
-@keyframes planeGlideRight {
-  0%,100% { transform: translate(0, 0) rotate(-10deg); }
-  50%      { transform: translate(-12px, -20px) rotate(-8deg); }
-}
 
 @keyframes pulseBubble {
   0%,100% { transform: scale(1); }
@@ -619,7 +642,6 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1;
   opacity: 0.9;
 }
 
@@ -646,10 +668,10 @@ html, body {
 }
 
 .belief-title-our {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "Syne", "Space Grotesk", sans-serif;
   text-transform: uppercase;
   color: black;
-  font-size: 40px;
+  font-size: 4rem;
   font-weight: 1000;
   text-align: center;
   -webkit-text-stroke: 1px var(--coco-lime);
@@ -658,9 +680,9 @@ html, body {
 }
 
 .belief-title {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "Syne", "Space Grotesk", sans-serif;
   font-size: clamp(26px, 3vw, 38px);
-  font-weight: 900;
+  font-weight: 800;
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -687,6 +709,8 @@ html, body {
   border-radius: 32px;
   padding: 40px 32px;
   text-align: center;
+  height: 25rem;
+  width: 20rem;
 
   box-shadow:
     0 0 0 1px rgba(47,230,218,0.25),
@@ -705,8 +729,8 @@ html, body {
 .belief-icon {
   color: var(--coco-white);
   margin: auto;
-  width: 64px;
-  height: 64px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
 
@@ -716,14 +740,14 @@ html, body {
 
 .belief-card-title {
   font-family: 'DM Sans', sans-serif;
-  font-size: 17px; font-weight: 700;
+  font-size: 24px; font-weight: 700;
   color: #ffffff;
   line-height: 1.3;
 }
 
 .belief-card-desc {
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 20px;
   color: rgba(255,255,255,0.65);
   line-height: 1.7;
 }
@@ -1436,8 +1460,7 @@ html, body {
 .card-client-section {
   background: url('../assets/BackgroundClient.png') no-repeat center center;
   background-size: cover;
-  padding-top: 1rem;
-  padding-bottom: 5rem;
+  padding: 15rem 30rem 8rem 30rem;
   width: 100%;
 }
 
@@ -1525,7 +1548,7 @@ html, body {
     position:relative;
     z-index:1;
     width:100%;
-    max-width:420px;
+    max-width:840px;
     padding:32px 28px 36px;
     border-radius:16px;
     background:rgba(4,10,12,.55);
@@ -1562,7 +1585,7 @@ html, body {
   .field label{
     display:block;
     margin-bottom:6px;
-    font-size:12.5px;
+    font-size:22px;
     font-weight:600;
     color:#f2f2f2;
   }
@@ -1576,7 +1599,7 @@ html, body {
     background:rgba(255,255,255,.03);
     color:#e8f7f5;
     font-family:inherit;
-    font-size:13px;
+    font-size:16px;
     outline:none;
     transition:border-color .2s, box-shadow .2s;
   }
@@ -1611,7 +1634,7 @@ html, body {
     background:linear-gradient(180deg, #3ff0dc, #1fc9b7);
     color:#04211d;
     font-weight:700;
-    font-size:13.5px;
+    font-size:16px;
     letter-spacing:.3px;
     cursor:pointer;
     box-shadow:0 0 16px rgba(47,232,212,.5);
