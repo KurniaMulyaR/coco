@@ -97,7 +97,7 @@ html, body {
   border-radius: 2px;
 }
 /* ---------- Global safety net ---------- */
-img, video { max-width: 100%; }
+/* img, video { max-width: 100%; } */
  
 /* ---------- Fix bug #4: card perlu positioning context ---------- */
 .card { position: relative; }
@@ -231,7 +231,7 @@ img, video { max-width: 100%; }
   }
   .hero-content h1 { max-width: 100%; }
 
-  .hero-serif  { font-size: clamp(28px, 8vw, 40px); }
+  .hero-serif  { font-size: clamp(28px, 9vw, 40px); }
   .hero-bold   { font-size: clamp(30px, 9vw, 44px); }
 
   .star-bottom-left { width: 100px; bottom: 6%; left: 2%; }
@@ -669,6 +669,10 @@ img, video { max-width: 100%; }
     gap: 32px;
   }
 
+  .weare-bg{
+    width: auto;
+  }
+
   /* Logo center & lebih kecil */
   .weare-logo {
     width: min(200px, 70%);
@@ -688,7 +692,7 @@ img, video { max-width: 100%; }
   .weare-plane-left {
     width: 180px;
     left: -3rem !important;
-    bottom: 0px;
+    bottom: -100px;
   }
   .weare-plane-right {
     width: 220px;
