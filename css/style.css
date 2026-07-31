@@ -56,7 +56,7 @@ html, body {
   padding: 0 48px;
   box-sizing: border-box;
   text-align: center;
-  margin-left: 12rem;
+  margin-left: 24rem;
 }
 
 .hero-content h1 {
@@ -83,6 +83,25 @@ html, body {
   text-shadow: 0 2px 20px rgba(0,0,0,0.6); /* tetap kebaca walau ketiban bagian terang background */
 }
 
+.hero-serif,
+.hero-bold{
+  background:linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #f5f0eb 20%,
+    #87ceeb 40%,
+    #0d3a4a 55%,
+    #ffffff 75%,
+    #f5f0eb 90%,
+    #ffffff 100%
+  );
+  background-size:300% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:shimmer 7s linear infinite;
+}
+
 .hero-title-underline {
   position: relative;
   display: inline-block;
@@ -95,6 +114,17 @@ html, body {
   height: 5px;
   background: var(--coco-lime);
   border-radius: 2px;
+}
+
+/* delay beda-beda tiap span biar gerakannya gak barengan, lebih hidup */
+.hero-content h1 span:nth-child(1){ animation-delay:0s; }
+.hero-content h1 span.hero-title-underline{ animation-delay:-1.75s; }
+.hero-content h1 span:nth-child(4){ animation-delay:-3.5s; }
+.hero-content h1 span.hero-bold:not(.hero-title-underline){ animation-delay:-5.25s; }
+
+@keyframes shimmer{
+  0%{ background-position:0% 50%; }
+  100%{ background-position:300% 50%; }
 }
 /* ---------- Global safety net ---------- */
 /* img, video { max-width: 100%; } */
@@ -124,6 +154,7 @@ html, body {
     padding: 100px 60px 0px 60px;
   }
   .weare-title { font-size: 48px; }
+  .weare-title-1 {font-size: 84px;}
  
   /* Belief system: biar 3 card boleh wrap, gak mepet */
   .belief-row { flex-wrap: wrap; }
@@ -148,9 +179,11 @@ html, body {
 @media (max-width: 768px) {
  
   .weare-title {
-    font-size: 36px;
+    font-size: 34px !important;
     line-height: 0.95;
   }
+
+  .weare-title-1 {font-size: 45px;}
  
   .card-client-section {
     padding: 3rem 20px 3rem 20px;
@@ -595,6 +628,8 @@ html, body {
   -webkit-text-stroke: 1px var(--coco-teal);
 }
 
+.weare-title-1 {font-size: 84px;}
+
 /* Yellow rule below title */
 .weare-rule {
   width: 100%;
@@ -871,11 +906,12 @@ html, body {
 
   /* Icon dikecilkan */
   .belief-icon {
-    width: 52px;
-    height: 52px;
+    width: 100px;
+    height: 100px;
   }
   .belief-icon2 {
     margin-bottom: 0.5rem;
+    height: 100px;
   }
 
   /* Balon disembunyikan di mobile — ganggu layout */
@@ -1104,6 +1140,7 @@ html, body {
   margin-bottom: 24px;
 }
 .footer-social a {
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
